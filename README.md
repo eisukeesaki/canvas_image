@@ -2,3 +2,5 @@
 
 ## Features
 - Turn rendered image to grayscale on button click
+
+![screenshot of app](screenshot.png)
