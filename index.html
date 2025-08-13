@@ -4,34 +4,36 @@
       <title>Images in HTML Canvas</title>
    </head>
    <body>
-      <canvas id="canvas" width="1024" height="768"></canvas>
+      <canvas id="canvas"></canvas>
       <br>
       <button id="greyscale">greyscale</button>
       <script>
          window.onload = function() {
-            const canvas = document.getElementById("canvas");
-            const ctx = canvas.getContext("2d");
-
             const img = new Image();
             img.src = "mikhail-nilov.jpg";
             img.onload = function() {
                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             }
 
+            const canvas = document.getElementById("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+
             const greyScale = function() {
-               let pxls = ctx.getImageData(0, 0, canvas.width, canvas.height);
-               let pxldata = pxls.data;
-               for (let i = 0; i < pxldata.length; i += 4) {
-                  const avg = (pxldata[i] + pxldata[i + 1] + pxldata[i + 2]) / 3;
-                  pxldata[i] = avg;
-                  pxldata[i + 1] = avg;
-                  pxldata[i + 2] = avg;
+               let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+               let pixeldata = pixels.data;
+               for (let i = 0; i < pixeldata.length; i += 4) {
+                  const avg = (pixeldata[i] + pixeldata[i + 1] + pixeldata[i + 2]) / 3;
+                  pixeldata[i] = avg;
+                  pixeldata[i + 1] = avg;
+                  pixeldata[i + 2] = avg;
                }
-               ctx.putImageData(pxls, 0, 0);
+               ctx.putImageData(pixels, 0, 0);
             }
 
-            const bnGrey = document.getElementById("greyscale");
-            bnGrey.addEventListener("click", greyScale);
+            const btnGreyScale = document.getElementById("greyscale");
+            btnGreyScale.addEventListener("click", greyScale);
          };
       </script>
    </body>
