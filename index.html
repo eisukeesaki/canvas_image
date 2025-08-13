@@ -21,7 +21,7 @@
             const greyScale = function() {
                let pxls = ctx.getImageData(0, 0, canvas.width, canvas.height);
                let pxldata = pxls.data;
-               for (let i = 0; i < pxldata.length; i++) {
+               for (let i = 0; i < pxldata.length; i += 4) {
                   const avg = (pxldata[i] + pxldata[i + 1] + pxldata[i + 2]) / 3;
                   pxldata[i] = avg;
                   pxldata[i + 1] = avg;
