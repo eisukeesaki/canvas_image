@@ -5,17 +5,33 @@
    </head>
    <body>
       <canvas id="canvas" width="1024" height="768"></canvas>
+      <br>
+      <button id="greyscale">greyscale</button>
       <script>
          window.onload = function() {
             const canvas = document.getElementById("canvas");
-            const context = canvas.getContext("2d");
+            const ctx = canvas.getContext("2d");
 
-            const image = new Image();
-            image.src = "neovim.webp";
-
-            image.onload = function() {
-               context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            const img = new Image();
+            img.src = "mikhail-nilov.jpg";
+            img.onload = function() {
+               ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             }
+
+            const greyScale = function() {
+               let pxls = ctx.getImageData(0, 0, canvas.width, canvas.height);
+               let pxldata = pxls.data;
+               for (let i = 0; i < pxldata.length; i++) {
+                  const avg = (pxldata[i] + pxldata[i + 1] + pxldata[i + 2]) / 3;
+                  pxldata[i] = avg;
+                  pxldata[i + 1] = avg;
+                  pxldata[i + 2] = avg;
+               }
+               ctx.putImageData(pxls, 0, 0);
+            }
+
+            const bnGrey = document.getElementById("greyscale");
+            bnGrey.addEventListener("click", greyScale);
          };
       </script>
    </body>
